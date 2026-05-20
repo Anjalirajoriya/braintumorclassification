@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Brain Tumor Classifier</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+  <div class="container">
+    <h1>🧠 Brain Tumor Classifier</h1>
+    <p class="subtitle">Upload an MRI scan to detect tumor type</p>
+    <form action="/predict" method="POST" enctype="multipart/form-data">
+      <div class="upload-box">
+        <input type="file" name="file" id="file" accept=".jpg,.jpeg,.png" required/>
+        <label for="file">
+          <div id="placeholder">
+            <span class="icon">📁</span>
+            <p>Click to choose MRI image</p>
+            <p class="hint">JPG or PNG supported</p>
+          </div>
+          <img id="preview" src="" alt="Preview"/>
+        </label>
+        <p id="filename" class="filename"></p>
+      </div>
+      <button type="submit" id="submitBtn" disabled>Analyse MRI</button>
+    </form>
+  </div>
+  <script>
+    const input = document.getElementById('file');
+    const preview = document.getElementById('preview');
+    const placeholder = document.getElementById('placeholder');
+    const filename = document.getElementById('filename');
+    const submitBtn = document.getElementById('submitBtn');
+    preview.style.display = 'none';
+    input.addEventListener('change', function() {
+      const file = this.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        preview.src = e.target.result;
+        preview.style.display = 'block';
+        placeholder.style.display = 'none';
+        filename.textContent = '✅ ' + file.name;
+        submitBtn.disabled = false;
+      };
+      reader.readAsDataURL(file);
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+*.keras
+*.h5
+.venv/
+static/uploads/*
+!static/uploads/.gitkeep
